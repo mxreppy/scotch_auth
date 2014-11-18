@@ -35,6 +35,9 @@ module.exports = function(passport) {
 		passReqToCallback: true // allows us to pass entire req to callback
 	},
 	function(req, email, password, done) {
+
+		console.log('local-signup for email ' + email );
+
 		// asynchronous
 		process.nextTick(function() {
 			// find a user by email
@@ -74,26 +77,33 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	},
 	function(req, email, password, done) {
+
+		console.log('local-login for email ' + email );
+
 		// find user
 		User.findOne({'local.email': email }, function(err, user) {
 			// any errors pass back
 			if(err) {
+				console.log('local-login err=|' + err + '|' );
 				return done(err);
 			}
 
 			if( !user ) {
+				console.log('local-login user not found for email=|' + email + '|' );
 				return done(null, false, req.flash( { 
 						'loginMessage':
 						'no user found for email ' + email
 				} ));
 			}
 
-			if( ! user.validPassword ) {
+			if( ! user.validatePassword(password) ) {
+				console.log('local-login pw mismatch for email=|' + email + '|' );
 				return done(null, false, req.flash(  {
 						'loginMessage':
 						'oops.  bad pw'
 				} ));
 			}
+		    console.log('local-login returning user=|' + JSON.stringify(user) + '|' );
 
 			return done(null, user);
 		});  // end of user findone fn

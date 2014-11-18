@@ -5,7 +5,7 @@ module.exports = function(app, passport) {
 	console.log( "creating routes");
 
 	/* home page */
-	app.get('/', function( req, res ) {
+	app.get('/', isLoggedIn, function( req, res ) {
 		console.log('in /');
 
 		res.render('index.ejs'); // load index.js
@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
 	});
 
 	// process login form
-	app.post('/login', passport.authenticate('local-signup', { 
+	app.post('/login', passport.authenticate('local-login', { 
 		successRedirect: '/profile', // secure profile redirect
 		failureRedirect: '/signup', // back to signup
 		failureFlash: true // allow flash message
@@ -62,8 +62,8 @@ function isLoggedIn( req, res, next ) {
 	}
 
 	// otherwise redirect
-	console.log('yo! not auth...');
+	console.log('yo! not auth... (requested url = ' + req.url + ')');
 	
-	res.redirect('/');
+	res.redirect('/login');
 }
 	
