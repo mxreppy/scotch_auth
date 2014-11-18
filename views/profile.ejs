@@ -4,7 +4,7 @@
 <head>
     <title>Node Authentication</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootst<a href="http://scotch.io/wp-content/uploads/2013/12/node-auth-facebook-profile.png"><img src="http://scotch.io/wp-content/uploads/2013/12/node-auth-facebook-profile.png" alt="node-auth-facebook-profile" width="1167" height="408" class="alignnone size-full wp-image-807" /></a>rapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
         body        { padding-top:80px; word-wrap:break-word; }
     </style>
@@ -19,15 +19,16 @@
 
     <div class="row">
 
-        <!-- LOCAL INFORMATION -->
+        <!-- FACEBOOK INFORMATION -->
         <div class="col-sm-6">
             <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
+                <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
 
                     <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
+                        <strong>id</strong>: <%= user.facebook.id %><br>
+                        <strong>token</strong>: <%= user.facebook.token %><br>
+                        <strong>email</strong>: <%= user.facebook.email %><br>
+                        <strong>name</strong>: <%= user.facebook.name %>
                     </p>
 
             </div>

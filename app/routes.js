@@ -47,6 +47,21 @@ module.exports = function(app, passport) {
 		});
 	});
 
+
+	// fb routes
+	
+	// route for authentication
+	app.get('/auth/facebook', passport.authenticate('facebook', 
+				{scope: 'email'}));
+
+	// facebook callback
+	app.get('/auth/facebook/callback', 
+			passport.authenticate( 'facebook', {
+				successRedirect: '/profile',
+				failureRedirec: '/'
+			}));
+
+
 	/* logout */
 	app.get('/logout', function(req, res) {
 		req.logout();
