@@ -82,16 +82,17 @@ module.exports = function(passport) {
 			}
 
 			if( !user ) {
-				return done(null, false, req.flash(
+				return done(null, false, req.flash( { 
 						'loginMessage':
 						'no user found for email ' + email
-						));
+				} ));
 			}
 
 			if( ! user.validPassword ) {
-				return done(null, false, req.flash( 
+				return done(null, false, req.flash(  {
 						'loginMessage':
-						'oops.  bad pw'));
+						'oops.  bad pw'
+				} ));
 			}
 
 			return done(null, user);
