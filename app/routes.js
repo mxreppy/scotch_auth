@@ -5,7 +5,7 @@ module.exports = function(app, passport) {
 	console.log( "creating routes");
 
 	/* home page */
-	app.get('/', isLoggedIn, function( req, res ) {
+	app.get('/', function( req, res ) {
 		console.log('in /');
 
 		res.render('index.ejs'); // load index.js
