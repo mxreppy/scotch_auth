@@ -62,6 +62,8 @@ function isLoggedIn( req, res, next ) {
 	}
 
 	// otherwise redirect
+	console.log('yo! not auth...');
+	
 	res.redirect('/');
 }
 	
