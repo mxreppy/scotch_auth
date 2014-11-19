@@ -3,9 +3,36 @@
 module.exports = function(app, passport) {
 
 	console.log( "creating routes");
+	
+	var requestCounter = 0;
+
+
+	/* generic middleware */
+	app.use( function(req, res, next ) {
+		console.log('in splat for url ' + req.url + ' - ' + req.method + " count " + requestCounter );
+		requestCounter ++;
+
+		next();
+	} );
+
+	/* generic middleware */
+	app.use( function(req, res, next ) {
+		console.log('in splat 2 for url ' + req.url + 
+		' - ' + req.method +  
+		' - ' + req.isAuthenticated() );
+
+        if( req.isAuthenticated() || 
+            req.url === '/login' || 
+            req.url === '/signup' ) { 
+            return next();
+        }
+        
+        console.log("not authenticated!");
+        res.redirect('/login');
+	} );
 
 	/* home page */
-	app.get('/', isLoggedIn, function( req, res ) {
+	app.get( '/', function( req, res ) {
 		console.log('in /');
 
 		res.render('index.ejs'); // load index.js
@@ -41,7 +68,7 @@ module.exports = function(app, passport) {
 	
 	/* profile */
 	// want this protected, so use middleware
-	app.get('/profile', isLoggedIn, function(req, res) {
+	app.get('/profile', function(req, res) {
 		res.render('profile.ejs', {
 			user: req.user // user from session to template
 		});
@@ -55,15 +82,15 @@ module.exports = function(app, passport) {
 };
 
 // route middleware
-function isLoggedIn( req, res, next ) {
-	// if user is auth in session, carry on
-	if( req.isAuthenticated() ){
-		return next();
-	}
-
-	// otherwise redirect
-	console.log('yo! not auth... (requested url = ' + req.url + ')');
-	
-	res.redirect('/login');
-}
+// function isLoggedIn( req, res, next ) {
+// 	// if user is auth in session, carry on
+// 	if( req.isAuthenticated() ){
+// 		return next();
+// 	}
+// 
+// 	// otherwise redirect
+// 	console.log('yo! not auth... (requested url = ' + req.url + ')');
+// 	
+// 	res.redirect('/login');
+// }
 	
